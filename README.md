@@ -1,1 +1,1 @@
-# shopping-cart
+# React + Vite Shopping Cart
