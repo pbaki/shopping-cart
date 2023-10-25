@@ -48,3 +48,6 @@
 .shopButton:active {
   background-color: #1c4966;
 }
+.shopButton .link {
+  text-decoration: none;
+}

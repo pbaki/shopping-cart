@@ -4,6 +4,7 @@ import "./Homepage.css";
 
 export default function Homepage({ APIData }) {
   console.log(APIData);
+
   return (
     <div className="mainPage">
       <Navigation />
@@ -16,7 +17,11 @@ export default function Homepage({ APIData }) {
           odit internos aut molestias temporibus ab sint maxime qui quidem
           optio.
         </p>
-        <button className="shopButton">SHOP NOW</button>
+        <button className="shopButton">
+          <Link className="link" to="/shop">
+            SHOP NOW
+          </Link>
+        </button>
       </div>
     </div>
   );
