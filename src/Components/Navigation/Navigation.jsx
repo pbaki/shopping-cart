@@ -22,6 +22,7 @@ export default function Navigation() {
         <Link className="link navCart" to="/shopping-cart">
           <CartIcon />
         </Link>
+        <div className="navCartProductCount">11</div>
       </div>
     </div>
   );
