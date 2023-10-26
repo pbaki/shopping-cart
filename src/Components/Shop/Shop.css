@@ -51,12 +51,24 @@
 }
 .productCard p {
   text-align: center;
+  padding: 5px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
+.productPrice {
+  font-weight: bold;
+}
+.productTitle {
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+}
 .howManyItems {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 5x 0px;
 }
 .howManyItems > * {
   display: flex;
@@ -76,6 +88,7 @@
 }
 
 .addProductToCart {
+  margin-top: 15px;
   display: inline-block;
   padding: 10px 20px;
   background-color: #3498db;
