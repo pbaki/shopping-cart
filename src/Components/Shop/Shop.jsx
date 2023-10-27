@@ -59,7 +59,7 @@ function SingleProductCard({ id, title, price, rating, count, image }) {
       <p className="productPrice" style={{ fontSize: "1.4rem" }}>
         $ {price}
       </p>
-      {/* <p className="productRating">Rating {rating} / 5</p> */}
+      <p className="productRating">Rating {rating} / 5</p>
       <p className="productCount">In Stock: {count}</p>
       <div className="addingProductsToCart">
         <div className="howManyItems">

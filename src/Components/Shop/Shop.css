@@ -26,24 +26,25 @@
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  justify-content: center;
+  margin-top: 15px;
 }
 .productCard {
   flex: 1;
+  max-width: 400px;
+  min-width: 300px;
   padding: 20px 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: white;
-  max-width: 300px;
-  min-width: 150px;
 }
 .productImageContainer {
-  max-width: 300px;
-  min-width: 150px;
   height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 20px 0px;
 }
 .productImage {
   max-width: 100%;
@@ -52,43 +53,76 @@
 .productCard p {
   text-align: center;
   padding: 5px 0px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 .productPrice {
   font-weight: bold;
+  margin-bottom: -5px;
 }
 .productTitle {
-  min-height: 120px;
+  flex: 1;
+  margin: 10px 0px;
+}
+.productCount {
+  margin-top: 10px;
+}
+
+.addingProductsToCart {
   display: flex;
+  flex-direction: column;
   align-items: center;
 }
 .howManyItems {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 5x 0px;
 }
 .howManyItems > * {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: -2px;
 }
+
 .howManyItems .minusProduct,
 .howManyItems .plusProduct {
-  border: 1px solid black;
-  height: 20px;
-  width: 40px;
+  border: 2px solid #3498db;
+  border-radius: 1px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.howManyItems .minusProduct:hover,
+.howManyItems .plusProduct:hover,
+.howManyItems .productAddCount:hover {
+  border-color: #2980b9;
+}
+
+.howManyItems .minusProduct,
+.howManyItems .plusProduct {
+  height: 35px;
+  width: 35px;
+  font-size: 1.7rem;
+  font-weight: 700;
+  font-family: monospace;
 }
 .howManyItems .productAddCount {
-  border: 1px solid black;
-  height: 20px;
-  width: 20px;
+  border: 2px solid #3498db;
+  border-radius: 1px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  height: 35px;
+  width: 60px;
+  border-left: none;
+  border-right: none;
 }
 
 .addProductToCart {
-  margin-top: 15px;
+  margin-top: 25px;
+  margin-bottom: 10px;
   display: inline-block;
   padding: 10px 20px;
   background-color: #3498db;
