@@ -24,6 +24,7 @@
 
 .shopPageProductsNavigation {
   display: flex;
+  align-items: center;
   gap: 10px;
 }
 #selectProducts {
@@ -152,4 +153,25 @@
 
 .addProductToCart:active {
   background-color: #1c4966;
+}
+/* Selection style */
+
+#selectProducts {
+  background-color: rgb(169, 169, 169);
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 8px;
+  padding-right: 40px;
+  padding-left: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+  background-image: url(../../Assets/chevron-down.svg);
+  background-repeat: no-repeat;
+  background-position: 164px 8px;
+}
+
+#selectProducts:hover {
+  background-color: #808080;
 }
