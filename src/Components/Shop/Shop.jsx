@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 export default function Shop({ APIData }) {
   const [productCategory, setproductCategory] = useState("All");
-  console.log(APIData);
+
   function isAPIDataHere(runIfDataHere) {
     return APIData.error !== null ? (
       <div className="errorMsg">APIData.error</div>
@@ -15,25 +15,42 @@ export default function Shop({ APIData }) {
       runIfDataHere()
     );
   }
-  function generateCards(category) {
-    //If category selected to write
-    //Initial loading All items
-    const allProducts = APIData.data.map((product) => {
-      return (
-        <SingleProductCard
-          id={product.id}
-          key={product.id}
-          title={product.title}
-          price={product.price}
-          rating={product.rating.rate}
-          count={product.rating.count}
-          image={product.image}
-        />
-      );
-    });
-    return allProducts;
-  }
 
+  function generateCards() {
+    if (productCategory !== "All") {
+      const allProducts = APIData.data.map((product) => {
+        if (product.category === productCategory) {
+          return (
+            <SingleProductCard
+              id={product.id}
+              key={product.id}
+              title={product.title}
+              price={product.price}
+              rating={product.rating.rate}
+              count={product.rating.count}
+              image={product.image}
+            />
+          );
+        }
+      });
+      return allProducts;
+    } else if (productCategory === "All") {
+      const allProducts = APIData.data.map((product) => {
+        return (
+          <SingleProductCard
+            id={product.id}
+            key={product.id}
+            title={product.title}
+            price={product.price}
+            rating={product.rating.rate}
+            count={product.rating.count}
+            image={product.image}
+          />
+        );
+      });
+      return allProducts;
+    }
+  }
   function categories() {
     let categoryList = [];
     APIData.data.forEach((item) => {
@@ -42,25 +59,20 @@ export default function Shop({ APIData }) {
       }
     });
     return (
-      <select name="selectProducts" id="selectProducts">
-        <option
-          key={0}
-          value="All"
-          onClick={() => {
-            setproductCategory("All");
-          }}
-        >
+      <select
+        name="selectProducts"
+        id="selectProducts"
+        value={productCategory}
+        onChange={(e) => {
+          setproductCategory(e.target.value);
+        }}
+      >
+        <option key={0} value="All">
           All
         </option>
         {categoryList.map((item, i) => {
           return (
-            <option
-              key={i + 1}
-              value={item}
-              onClick={() => {
-                setproductCategory(item);
-              }}
-            >
+            <option key={i + 1} value={item}>
               {item}
             </option>
           );
