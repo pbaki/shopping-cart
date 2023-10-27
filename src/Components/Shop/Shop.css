@@ -21,6 +21,16 @@
 .shopPageContent p {
   font-size: 1.2rem;
 }
+
+.shopPageProductsNavigation {
+  display: flex;
+  gap: 10px;
+}
+#selectProducts {
+  width: auto;
+  display: inline-block;
+}
+
 /* Products styling */
 .shopProducts {
   display: flex;

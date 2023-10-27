@@ -4,15 +4,15 @@ import Navigation from "../Navigation/Navigation";
 import { useEffect, useState } from "react";
 
 export default function Shop({ APIData }) {
-  const [products, setProducts] = useState(APIData.data);
+  const [productCategory, setproductCategory] = useState("All");
   console.log(APIData);
-  function isAPIDataHere() {
+  function isAPIDataHere(runIfDataHere) {
     return APIData.error !== null ? (
       <div className="errorMsg">APIData.error</div>
     ) : APIData.loading === true ? (
       <div className="Loading">Loading...</div>
     ) : (
-      generateCards()
+      runIfDataHere()
     );
   }
   function generateCards(category) {
@@ -22,6 +22,7 @@ export default function Shop({ APIData }) {
       return (
         <SingleProductCard
           id={product.id}
+          key={product.id}
           title={product.title}
           price={product.price}
           rating={product.rating.rate}
@@ -33,15 +34,51 @@ export default function Shop({ APIData }) {
     return allProducts;
   }
 
+  function categories() {
+    let categoryList = [];
+    APIData.data.forEach((item) => {
+      if (!categoryList.includes(item.category)) {
+        categoryList.push(item.category);
+      }
+    });
+    return (
+      <select name="selectProducts" id="selectProducts">
+        <option
+          key={0}
+          value="All"
+          onClick={() => {
+            setproductCategory("All");
+          }}
+        >
+          All
+        </option>
+        {categoryList.map((item, i) => {
+          return (
+            <option
+              key={i + 1}
+              value={item}
+              onClick={() => {
+                setproductCategory(item);
+              }}
+            >
+              {item}
+            </option>
+          );
+        })}
+      </select>
+    );
+  }
+
   return (
     <div className="shopPage">
       <Navigation />
       <div className="shopPageContent">
         <h1>Shop</h1>
         <div className="shopPageProductsNavigation">
-          <p>Products - (Selectable Product category)</p>
+          <p>Products - </p>
+          {isAPIDataHere(categories)}
         </div>
-        <div className="shopProducts">{isAPIDataHere()}</div>
+        <div className="shopProducts">{isAPIDataHere(generateCards)}</div>
       </div>
     </div>
   );
