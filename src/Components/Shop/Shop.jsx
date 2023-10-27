@@ -48,6 +48,19 @@ export default function Shop({ APIData }) {
 }
 
 function SingleProductCard({ id, title, price, rating, count, image }) {
+  const [productCount, setProductCount] = useState(1);
+
+  function increaseProductCount() {
+    if (productCount < count) {
+      setProductCount(productCount + 1);
+    }
+  }
+  function decreaseProductCount() {
+    if (productCount > 1) {
+      setProductCount(productCount - 1);
+    }
+  }
+
   return (
     <div className="productCard" key={id}>
       <div className="productImageContainer">
@@ -63,9 +76,13 @@ function SingleProductCard({ id, title, price, rating, count, image }) {
       <p className="productCount">In Stock: {count}</p>
       <div className="addingProductsToCart">
         <div className="howManyItems">
-          <div className="minusProduct">-</div>
-          <div className="productAddCount">22</div>
-          <div className="plusProduct">+</div>
+          <div className="minusProduct" onClick={decreaseProductCount}>
+            -
+          </div>
+          <div className="productAddCount">{productCount}</div>
+          <div className="plusProduct" onClick={increaseProductCount}>
+            +
+          </div>
         </div>
         <button className="addProductToCart">Add To cart</button>
       </div>
