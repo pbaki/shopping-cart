@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import "./Shop.css";
 import Navigation from "../Navigation/Navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 export default function Shop({ APIData }) {
   const [productCategory, setproductCategory] = useState("All");
@@ -16,11 +16,14 @@ export default function Shop({ APIData }) {
     );
   }
 
+  function createAnotherPages(arrayOfProducts) {}
+
   function generateCards() {
+    let productsArray = [];
     if (productCategory !== "All") {
-      const allProducts = APIData.data.map((product) => {
+      APIData.data.forEach((product) => {
         if (product.category === productCategory) {
-          return (
+          productsArray.push(
             <SingleProductCard
               id={product.id}
               key={product.id}
@@ -33,10 +36,9 @@ export default function Shop({ APIData }) {
           );
         }
       });
-      return allProducts;
     } else if (productCategory === "All") {
-      const allProducts = APIData.data.map((product) => {
-        return (
+      APIData.data.forEach((product) => {
+        productsArray.push(
           <SingleProductCard
             id={product.id}
             key={product.id}
@@ -48,8 +50,9 @@ export default function Shop({ APIData }) {
           />
         );
       });
-      return allProducts;
     }
+
+    return productsArray;
   }
   function categories() {
     let categoryList = [];
