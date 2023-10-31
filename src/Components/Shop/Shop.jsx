@@ -7,7 +7,7 @@ export default function Shop({ APIData }) {
   const [productCategory, setproductCategory] = useState("All");
   const { page } = useParams();
   const [products, setProducts] = useState(null);
-  const [currentPage, setCurrentPage] = useState(page);
+  const [currentPage, setCurrentPage] = useState(parseInt(page));
   const [howManyPages, setHowManyPages] = useState(0);
   const navigate = useNavigate();
 
