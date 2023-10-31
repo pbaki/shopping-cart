@@ -1,10 +1,15 @@
-import { Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import "./Shop.css";
 import Navigation from "../Navigation/Navigation";
-import { useEffect, useState, useRef } from "react";
+import { useState } from "react";
 
 export default function Shop({ APIData }) {
   const [productCategory, setproductCategory] = useState("All");
+  const { page } = useParams();
+  const [products, setProducts] = useState(null);
+  const [currentPage, setCurrentPage] = useState(page);
+  const [howManyPages, setHowManyPages] = useState(0);
+  const navigate = useNavigate();
 
   function isAPIDataHere(runIfDataHere) {
     return APIData.error !== null ? (
@@ -16,14 +21,39 @@ export default function Shop({ APIData }) {
     );
   }
 
-  function createAnotherPages(arrayOfProducts) {}
-
   function generateCards() {
-    let productsArray = [];
-    if (productCategory !== "All") {
-      APIData.data.forEach((product) => {
-        if (product.category === productCategory) {
-          productsArray.push(
+    if (products === null) {
+      let productsArray = [];
+      if (productCategory !== "All") {
+        APIData.data.forEach((product) => {
+          if (product.category === productCategory) {
+            if (productsArray.length === 0) {
+              productsArray.push([]);
+            } else if (productsArray[productsArray.length - 1].length > 7) {
+              productsArray.push([]);
+            }
+            console.log(productsArray);
+            productsArray[productsArray.length - 1].push(
+              <SingleProductCard
+                id={product.id}
+                key={product.id}
+                title={product.title}
+                price={product.price}
+                rating={product.rating.rate}
+                count={product.rating.count}
+                image={product.image}
+              />
+            );
+          }
+        });
+      } else if (productCategory === "All") {
+        APIData.data.forEach((product) => {
+          if (productsArray.length === 0) {
+            productsArray.push([]);
+          } else if (productsArray[productsArray.length - 1].length > 7) {
+            productsArray.push([]);
+          }
+          productsArray[productsArray.length - 1].push(
             <SingleProductCard
               id={product.id}
               key={product.id}
@@ -34,26 +64,18 @@ export default function Shop({ APIData }) {
               image={product.image}
             />
           );
-        }
-      });
-    } else if (productCategory === "All") {
-      APIData.data.forEach((product) => {
-        productsArray.push(
-          <SingleProductCard
-            id={product.id}
-            key={product.id}
-            title={product.title}
-            price={product.price}
-            rating={product.rating.rate}
-            count={product.rating.count}
-            image={product.image}
-          />
-        );
-      });
+        });
+      }
+      setProducts(productsArray);
     }
-
-    return productsArray;
+    if (howManyPages === 0 && products !== null) {
+      setHowManyPages(products.length);
+    }
+    if (products !== null) {
+      return products[currentPage - 1];
+    }
   }
+
   function categories() {
     let categoryList = [];
     APIData.data.forEach((item) => {
@@ -83,7 +105,18 @@ export default function Shop({ APIData }) {
       </select>
     );
   }
-
+  function nextPage() {
+    if (currentPage < howManyPages) {
+      setCurrentPage(currentPage + 1);
+      navigate("/shop/" + (currentPage + 1));
+    }
+  }
+  function previousPage() {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+      navigate("/shop/" + (currentPage - 1));
+    }
+  }
   return (
     <div className="shopPage">
       <Navigation />
@@ -93,7 +126,18 @@ export default function Shop({ APIData }) {
           <p>Products - </p>
           {isAPIDataHere(categories)}
         </div>
-        <div className="shopProducts">{isAPIDataHere(generateCards)}</div>
+        <div className="shopProducts">
+          {page == currentPage ? isAPIDataHere(generateCards) : <>???</>}
+        </div>
+        <div className="linksToOtherPages">
+          <button type="button" onClick={previousPage}>
+            --
+          </button>
+          <p>Page: {currentPage + "/" + howManyPages}</p>
+          <button type="button" onClick={nextPage}>
+            ++
+          </button>
+        </div>
       </div>
     </div>
   );

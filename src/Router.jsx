@@ -14,7 +14,7 @@ const Router = () => {
       errorElement: <ErrorPage />,
     },
     {
-      path: "shop",
+      path: "shop/:page",
       element: <Shop APIData={callAPI} />,
     },
     {
