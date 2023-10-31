@@ -17,7 +17,7 @@ export default function Homepage({ APIData }) {
           odit internos aut molestias temporibus ab sint maxime qui quidem
           optio.
         </p>
-        <Link className="link" to="/shop">
+        <Link className="link" to="/shop/1">
           <button className="shopButton">SHOP NOW</button>
         </Link>
       </div>
