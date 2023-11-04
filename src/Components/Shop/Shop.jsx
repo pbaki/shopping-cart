@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./Shop.css";
 import Navigation from "../Navigation/Navigation";
 import { useState } from "react";
+import { DataTransfer } from "../Shopping-cart/Shopping-cart";
 
 export default function Shop({ APIData }) {
   const [productCategory, setproductCategory] = useState("All");
@@ -145,6 +146,7 @@ export default function Shop({ APIData }) {
 
 function SingleProductCard({ id, title, price, rating, count, image }) {
   const [productCount, setProductCount] = useState(1);
+  const [data, setData] = useState(null);
 
   function increaseProductCount() {
     if (productCount < count) {
@@ -155,6 +157,27 @@ function SingleProductCard({ id, title, price, rating, count, image }) {
     if (productCount > 1) {
       setProductCount(productCount - 1);
     }
+  }
+
+  const handleClick = () => {
+    const newData = giveDataToShoppingCart(
+      id,
+      title,
+      price,
+      productCount,
+      image
+    );
+    setData(newData);
+  };
+
+  function giveDataToShoppingCart(id, title, price, quantity, image) {
+    return {
+      id: id,
+      title: title,
+      price: price,
+      quantity: quantity,
+      image: image,
+    };
   }
 
   return (
@@ -180,7 +203,10 @@ function SingleProductCard({ id, title, price, rating, count, image }) {
             +
           </div>
         </div>
-        <button className="addProductToCart">Add To cart</button>
+        <button className="addProductToCart" onClick={handleClick}>
+          Add To cart
+        </button>
+        <DataTransfer data={data} />
       </div>
     </div>
   );
