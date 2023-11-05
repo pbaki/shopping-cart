@@ -1,11 +1,15 @@
 import { Link } from "react-router-dom";
 import "./Shopping-cart.css";
 import Navigation from "../Navigation/Navigation";
+import { useState, useEffect } from "react";
 
-function DataTransfer({ data, getData }) {
+function DataTransfer({ data }) {
+  const [dataObjects, setDataObjects] = useState([]);
   if (data) {
     console.log(data);
   }
+
+  console.log(dataObjects);
 }
 
 export default function ShoppingCart({ APIData }) {
