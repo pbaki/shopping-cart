@@ -32,7 +32,6 @@ export default function Shop({ APIData, addToCartFunctionality }) {
             } else if (productsArray[productsArray.length - 1].length > 7) {
               productsArray.push([]);
             }
-            console.log(productsArray);
             productsArray[productsArray.length - 1].push(
               <SingleProductCard
                 id={product.id}

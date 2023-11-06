@@ -20,9 +20,7 @@ function App() {
     };
     setData((prevData) => {
       const ifThere = prevData.find((item) => item.id === newData.id);
-
       if (ifThere) {
-        // If the item is already in the cart, update its quantity
         return prevData.map((item) => {
           if (item.id === newData.id) {
             return { ...item, quantity: item.quantity + newData.quantity };
@@ -30,13 +28,11 @@ function App() {
           return item;
         });
       } else {
-        // If the item is not in the cart, add it
         return [...prevData, newData];
       }
     });
   };
 
-  console.log(data);
   return (
     <Routes>
       <Route path="/" element={<Homepage APIData={callAPI} />}></Route>

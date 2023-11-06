@@ -3,8 +3,6 @@ import Navigation from "../Navigation/Navigation";
 import "./Homepage.css";
 
 export default function Homepage({ APIData }) {
-  console.log(APIData);
-
   return (
     <div className="mainPage">
       <Navigation />
