@@ -2,16 +2,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./Shop.css";
 import Navigation from "../Navigation/Navigation";
 import { useEffect, useState } from "react";
-import { DataTransfer } from "../Shopping-cart/Shopping-cart";
 
-export default function Shop({ APIData }) {
+export default function Shop({ APIData, addToCartFunctionality }) {
   const [productCategory, setproductCategory] = useState("All");
   const { page } = useParams();
   const [products, setProducts] = useState(null);
   const [currentPage, setCurrentPage] = useState(parseInt(page));
   const [howManyPages, setHowManyPages] = useState(0);
   const navigate = useNavigate();
-  const [data, setData] = useState(null);
 
   function isAPIDataHere(runIfDataHere) {
     return APIData.error !== null ? (
@@ -44,6 +42,7 @@ export default function Shop({ APIData }) {
                 rating={product.rating.rate}
                 count={product.rating.count}
                 image={product.image}
+                addToCartFunctionality={addToCartFunctionality}
               />
             );
           }
@@ -64,7 +63,7 @@ export default function Shop({ APIData }) {
               rating={product.rating.rate}
               count={product.rating.count}
               image={product.image}
-              getData={addToCartFunctionality}
+              addToCartFunctionality={addToCartFunctionality}
             />
           );
         });
@@ -120,21 +119,6 @@ export default function Shop({ APIData }) {
       navigate("/shop/" + (currentPage - 1));
     }
   }
-  useEffect(() => {
-    if (data !== null) {
-      setData(null);
-    }
-  }, [data]);
-  function addToCartFunctionality(id, title, price, quantity, image) {
-    const newData = {
-      id: id,
-      title: title,
-      price: price,
-      quantity: quantity,
-      image: image,
-    };
-    setData(newData);
-  }
 
   return (
     <div className="shopPage">
@@ -158,7 +142,6 @@ export default function Shop({ APIData }) {
           </button>
         </div>
       </div>
-      {data === null ? null : <DataTransfer data={data} />}
     </div>
   );
 }
@@ -170,7 +153,7 @@ function SingleProductCard({
   rating,
   count,
   image,
-  getData,
+  addToCartFunctionality,
 }) {
   const [productCount, setProductCount] = useState(1);
 
@@ -211,7 +194,7 @@ function SingleProductCard({
         <button
           className="addProductToCart"
           onClick={() => {
-            getData(id, title, price, productCount, image);
+            addToCartFunctionality(id, title, price, productCount, image);
           }}
         >
           Add To cart
