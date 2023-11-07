@@ -50,7 +50,7 @@ export default function Shop({ APIData, addToCartFunctionality }) {
         APIData.data.forEach((product) => {
           if (productsArray.length === 0) {
             productsArray.push([]);
-          } else if (productsArray[productsArray.length - 1].length > 7) {
+          } else if (productsArray[productsArray.length - 1].length > 5) {
             productsArray.push([]);
           }
           productsArray[productsArray.length - 1].push(
