@@ -10,13 +10,21 @@ function App() {
   const callAPI = FakeStoreApi();
   const [data, setData] = useState([]);
 
-  const addToCartFunctionality = (id, title, price, quantity, image) => {
+  const addToCartFunctionality = (
+    id,
+    title,
+    price,
+    quantity,
+    image,
+    totalCount
+  ) => {
     const newData = {
       id: id,
       title: title,
       price: price,
       quantity: quantity,
       image: image,
+      totalCount: totalCount,
     };
     setData((prevData) => {
       const ifThere = prevData.find((item) => item.id === newData.id);

@@ -193,7 +193,14 @@ function SingleProductCard({
         <button
           className="addProductToCart"
           onClick={() => {
-            addToCartFunctionality(id, title, price, productCount, image);
+            addToCartFunctionality(
+              id,
+              title,
+              price,
+              productCount,
+              image,
+              count
+            );
           }}
         >
           Add To cart

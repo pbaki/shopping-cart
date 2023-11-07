@@ -22,7 +22,7 @@ function CartWithItems({ products, updatedDataRemove }) {
 
   function increaseProductCount(id) {
     const updatedCartProducts = cartProducts.map((item) => {
-      if (item.id === id) {
+      if (item.id === id && item.quantity < item.totalCount) {
         return {
           ...item,
           quantity: item.quantity + 1,
