@@ -49,7 +49,7 @@ function App() {
     data.map((product) => {
       quantity += product.quantity;
     });
-    return <>{quantity}</>;
+    return <>{quantity > 0 ? quantity : null}</>;
   }
 
   return (
