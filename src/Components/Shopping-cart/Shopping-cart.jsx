@@ -3,21 +3,31 @@ import "./Shopping-cart.css";
 import Navigation from "../Navigation/Navigation";
 import { useState, useEffect } from "react";
 
-export default function ShoppingCart({ APIData, data, updatedDataRemove }) {
+export default function ShoppingCart({
+  APIData,
+  data,
+  updatedData,
+  productsInCartQuantity,
+  updateQuantity,
+}) {
   console.log(data);
 
   return (
     <div className="shoppingCartPage">
-      <Navigation />
+      <Navigation productsInCartQuantity={productsInCartQuantity} />
       {data.length > 0 ? (
-        <CartWithItems products={data} updatedDataRemove={updatedDataRemove} />
+        <CartWithItems
+          products={data}
+          updatedData={updatedData}
+          updateQuantity={updateQuantity}
+        />
       ) : (
         <EmptyCart />
       )}
     </div>
   );
 }
-function CartWithItems({ products, updatedDataRemove }) {
+function CartWithItems({ products, updatedData }) {
   const [cartProducts, setCartProducts] = useState(products);
 
   function increaseProductCount(id) {
@@ -30,7 +40,7 @@ function CartWithItems({ products, updatedDataRemove }) {
       }
       return item;
     });
-
+    updatedData(updatedCartProducts);
     setCartProducts(updatedCartProducts);
   }
 
@@ -44,7 +54,7 @@ function CartWithItems({ products, updatedDataRemove }) {
       }
       return item;
     });
-
+    updatedData(updatedCartProducts);
     setCartProducts(updatedCartProducts);
   }
 
@@ -58,7 +68,7 @@ function CartWithItems({ products, updatedDataRemove }) {
               const removed = cartProducts.filter((item) => {
                 return item.id !== product.id;
               });
-              updatedDataRemove(removed);
+              updatedData(removed);
               setCartProducts(removed);
             }}
           >

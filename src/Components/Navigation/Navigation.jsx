@@ -1,8 +1,13 @@
 import "./Navigation.css";
 import { Link } from "react-router-dom";
 import CartIcon from "../../Assets/shopping-cart.jsx";
+import { useEffect, useState } from "react";
 
-export default function Navigation() {
+export default function Navigation({ productsInCartQuantity }) {
+  const [quantity, setQuantity] = useState(null);
+  useEffect(() => {
+    setQuantity(productsInCartQuantity());
+  }, [productsInCartQuantity]);
   return (
     <div className="navContainer">
       <div className="navStoreName">
@@ -22,7 +27,7 @@ export default function Navigation() {
         <Link className="link navCart" to="/shopping-cart">
           <CartIcon />
         </Link>
-        <div className="navCartProductCount">11</div>
+        <div className="navCartProductCount">{quantity}</div>
       </div>
     </div>
   );

@@ -9,6 +9,7 @@ import ErrorPage from "./ErrorPage";
 function App() {
   const callAPI = FakeStoreApi();
   const [data, setData] = useState([]);
+  const [quantityRefresh, setQuantityRefresh] = useState(true);
 
   const addToCartFunctionality = (
     id,
@@ -40,19 +41,35 @@ function App() {
       }
     });
   };
-  function updatedDataRemove(data) {
+  function updatedData(data) {
     setData(data);
+  }
+  function productsInCartQuantity() {
+    let quantity = 0;
+    data.map((product) => {
+      quantity += product.quantity;
+    });
+    return <>{quantity}</>;
   }
 
   return (
     <Routes>
-      <Route path="/" element={<Homepage APIData={callAPI} />}></Route>
+      <Route
+        path="/"
+        element={
+          <Homepage
+            APIData={callAPI}
+            productsInCartQuantity={productsInCartQuantity}
+          />
+        }
+      ></Route>
       <Route
         path="/shop/:page"
         element={
           <Shop
             APIData={callAPI}
             addToCartFunctionality={addToCartFunctionality}
+            productsInCartQuantity={productsInCartQuantity}
           />
         }
       ></Route>
@@ -62,7 +79,8 @@ function App() {
           <ShoppingCart
             APIData={callAPI}
             data={data}
-            updatedDataRemove={updatedDataRemove}
+            updatedData={updatedData}
+            productsInCartQuantity={productsInCartQuantity}
           />
         }
       ></Route>

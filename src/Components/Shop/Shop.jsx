@@ -3,7 +3,11 @@ import "./Shop.css";
 import Navigation from "../Navigation/Navigation";
 import { useEffect, useState } from "react";
 
-export default function Shop({ APIData, addToCartFunctionality }) {
+export default function Shop({
+  APIData,
+  addToCartFunctionality,
+  productsInCartQuantity,
+}) {
   const [productCategory, setproductCategory] = useState("All");
   const { page } = useParams();
   const [products, setProducts] = useState(null);
@@ -121,7 +125,7 @@ export default function Shop({ APIData, addToCartFunctionality }) {
 
   return (
     <div className="shopPage">
-      <Navigation />
+      <Navigation productsInCartQuantity={productsInCartQuantity} />
       <div className="shopPageContent">
         <h1>Shop</h1>
         <div className="shopPageProductsNavigation">

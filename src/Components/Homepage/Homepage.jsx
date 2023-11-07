@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 import Navigation from "../Navigation/Navigation";
 import "./Homepage.css";
 
-export default function Homepage({ APIData }) {
+export default function Homepage({ productsInCartQuantity }) {
   return (
     <div className="mainPage">
-      <Navigation />
+      <Navigation productsInCartQuantity={productsInCartQuantity} />
       <div className="homeContent">
         <h1>Welcome To Store Name</h1>
         <p>
