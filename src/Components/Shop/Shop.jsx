@@ -33,7 +33,7 @@ export default function Shop({
           if (product.category === productCategory) {
             if (productsArray.length === 0) {
               productsArray.push([]);
-            } else if (productsArray[productsArray.length - 1].length > 7) {
+            } else if (productsArray[productsArray.length - 1].length > 5) {
               productsArray.push([]);
             }
             productsArray[productsArray.length - 1].push(
@@ -95,6 +95,10 @@ export default function Shop({
         value={productCategory}
         onChange={(e) => {
           setproductCategory(e.target.value);
+          setProducts(null);
+          setHowManyPages(0);
+          setCurrentPage(1);
+          navigate("/shop/" + 1);
         }}
       >
         <option key={0} value="All">
@@ -133,7 +137,7 @@ export default function Shop({
           {isAPIDataHere(categories)}
         </div>
         <div className="shopProducts">
-          {page == currentPage ? isAPIDataHere(generateCards) : <>???</>}
+          {page == currentPage ? isAPIDataHere(generateCards) : null}
         </div>
         <div className="linksToOtherPages">
           <button type="button" onClick={previousPage}>
