@@ -3,22 +3,38 @@ import "./Shopping-cart.css";
 import Navigation from "../Navigation/Navigation";
 import { useState, useEffect } from "react";
 
-export default function ShoppingCart({ APIData, data }) {
+export default function ShoppingCart({ APIData, data, updatedDataRemove }) {
   console.log(data);
 
   return (
     <div className="shoppingCartPage">
       <Navigation />
-      {data.length > 0 ? <CartWithItems products={data} /> : <EmptyCart />}
+      {data.length > 0 ? (
+        <CartWithItems products={data} updatedDataRemove={updatedDataRemove} />
+      ) : (
+        <EmptyCart />
+      )}
     </div>
   );
 }
-function CartWithItems({ products }) {
+function CartWithItems({ products, updatedDataRemove }) {
+  const [cartProducts, setCartProducts] = useState(products);
   function displayProducts() {
-    const productJSX = products.map((product) => {
+    let productJSX = cartProducts.map((product) => {
       return (
         <div className="cartProduct" key={product.id}>
-          <button className="removeFromCart">X</button>
+          <button
+            className="removeFromCart"
+            onClick={() => {
+              const removed = cartProducts.filter((item) => {
+                return item.id !== product.id;
+              });
+              updatedDataRemove(removed);
+              setCartProducts(removed);
+            }}
+          >
+            X
+          </button>
           <div className="productImg">
             <img className="img" src={product.image} alt="Product Image" />
           </div>

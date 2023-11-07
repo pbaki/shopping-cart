@@ -32,6 +32,9 @@ function App() {
       }
     });
   };
+  function updatedDataRemove(data) {
+    setData(data);
+  }
 
   return (
     <Routes>
@@ -47,7 +50,13 @@ function App() {
       ></Route>
       <Route
         path="/shopping-cart"
-        element={<ShoppingCart APIData={callAPI} data={data} />}
+        element={
+          <ShoppingCart
+            APIData={callAPI}
+            data={data}
+            updatedDataRemove={updatedDataRemove}
+          />
+        }
       ></Route>
       <Route path="*" element={<ErrorPage />} />
     </Routes>
