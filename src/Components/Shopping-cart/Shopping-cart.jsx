@@ -19,6 +19,35 @@ export default function ShoppingCart({ APIData, data, updatedDataRemove }) {
 }
 function CartWithItems({ products, updatedDataRemove }) {
   const [cartProducts, setCartProducts] = useState(products);
+
+  function increaseProductCount(id) {
+    const updatedCartProducts = cartProducts.map((item) => {
+      if (item.id === id) {
+        return {
+          ...item,
+          quantity: item.quantity + 1,
+        };
+      }
+      return item;
+    });
+
+    setCartProducts(updatedCartProducts);
+  }
+
+  function decreaseProductCount(id) {
+    const updatedCartProducts = cartProducts.map((item) => {
+      if (item.id === id && item.quantity > 1) {
+        return {
+          ...item,
+          quantity: item.quantity - 1,
+        };
+      }
+      return item;
+    });
+
+    setCartProducts(updatedCartProducts);
+  }
+
   function displayProducts() {
     let productJSX = cartProducts.map((product) => {
       return (
@@ -42,11 +71,27 @@ function CartWithItems({ products, updatedDataRemove }) {
             <div className="productName">{product.title}</div>
             <div className="quantityPrice">
               <div className="howManyItems">
-                <div className="minusProduct">-</div>
+                <div
+                  className="minusProduct"
+                  onClick={() => {
+                    decreaseProductCount(product.id);
+                  }}
+                >
+                  -
+                </div>
                 <div className="quantity">{product.quantity}</div>
-                <div className="plusProduct">+</div>
+                <div
+                  className="plusProduct"
+                  onClick={() => {
+                    increaseProductCount(product.id);
+                  }}
+                >
+                  +
+                </div>
               </div>
-              <div className="price">{"$ " + product.price}</div>
+              <div className="price">
+                {"$ " + (product.price * product.quantity).toFixed(2)}
+              </div>
             </div>
           </div>
         </div>
