@@ -79,13 +79,15 @@ describe("SingleProductCard", () => {
     );
     let count = screen.getByTestId("count");
     const plusButton = screen.getByTestId("plusProduct");
-    for (let i = 0; i < 2; i += 1) {
+    for (let i = 0; i < product.count + 1; i += 1) {
       await userEvent.click(plusButton);
     }
-    expect(count.textContent).toBe("3");
+    expect(count.textContent).toBe(product.count.toString());
 
     const minusButton = screen.getByTestId("minusProduct");
-    await userEvent.click(minusButton);
-    expect(count.textContent).toBe("2");
+    for (let i = 0; i < product.count + 1; i += 1) {
+      await userEvent.click(minusButton);
+    }
+    expect(count.textContent).toBe("1");
   });
 });
