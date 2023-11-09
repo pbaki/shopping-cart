@@ -211,9 +211,10 @@ function SingleProductCard({
             );
           }}
         >
-          Add To cart
+          Add To Cart
         </button>
       </div>
     </div>
   );
 }
+export { SingleProductCard };
