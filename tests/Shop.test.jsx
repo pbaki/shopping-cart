@@ -64,4 +64,28 @@ describe("SingleProductCard", () => {
     );
     expect(addToCartFunctionality).toHaveBeenCalledTimes(1);
   });
+
+  test("clicking + and - buttons", async () => {
+    render(
+      <SingleProductCard
+        id={product.id}
+        title={product.title}
+        price={product.price}
+        rating={product.rating}
+        count={product.count}
+        image={product.image}
+        addToCartFunctionality={addToCartFunctionality}
+      />
+    );
+    let count = screen.getByTestId("count");
+    const plusButton = screen.getByTestId("plusProduct");
+    for (let i = 0; i < 2; i += 1) {
+      await userEvent.click(plusButton);
+    }
+    expect(count.textContent).toBe("3");
+
+    const minusButton = screen.getByTestId("minusProduct");
+    await userEvent.click(minusButton);
+    expect(count.textContent).toBe("2");
+  });
 });

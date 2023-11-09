@@ -190,11 +190,21 @@ function SingleProductCard({
       <p className="productCount">In Stock: {count}</p>
       <div className="addingProductsToCart">
         <div className="howManyItems">
-          <div className="minusProduct" onClick={decreaseProductCount}>
+          <div
+            className="minusProduct"
+            onClick={decreaseProductCount}
+            data-testid={"minusProduct"}
+          >
             -
           </div>
-          <div className="productAddCount">{productCount}</div>
-          <div className="plusProduct" onClick={increaseProductCount}>
+          <div className="productAddCount" data-testid={"count"}>
+            {productCount}
+          </div>
+          <div
+            className="plusProduct"
+            data-testid={"plusProduct"}
+            onClick={increaseProductCount}
+          >
             +
           </div>
         </div>
