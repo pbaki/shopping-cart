@@ -1,8 +1,129 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { SingleProductCard } from "../src/Components/Shop/Shop";
 import userEvent from "@testing-library/user-event";
-import { expect, vi } from "vitest";
+import { describe, expect, test, vi } from "vitest";
+import { SingleProductCard } from "../src/Components/Shop/Shop";
+import { MemoryRouter } from "react-router-dom";
+import Navigation from "../src/Components/Navigation/Navigation";
+import Shop from "../src/Components/Shop/Shop";
+import { Routes, Route } from "react-router-dom";
+
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useParams: jest.fn(),
+}));
+
+describe("Shop", () => {
+  test("Nav component is rendered", () => {
+    render(
+      <MemoryRouter initialEntries={["/shop/1"]}>
+        <Shop
+          productsInCartQuantity={() => 3}
+          APIData={{
+            data: [],
+            loading: false,
+            error: null,
+          }}
+        />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText("Home")).toBeInTheDocument();
+    expect(screen.getByText("3")).toBeInTheDocument();
+  });
+  test("renders shop page content with a specific product", () => {
+    useParams.mockReturnValue({ page: "1" });
+    render(
+      <MemoryRouter initialEntries={["/shop/1"]} keyLength={0}>
+        <Routes>
+          <Route
+            path="/shop/:page"
+            element={
+              <Shop
+                productsInCartQuantity={() => 0}
+                APIData={{
+                  data: [
+                    {
+                      id: 1,
+                      title: "Product 1",
+                      price: 9.99,
+                      rating: { rate: 4.5, count: 10 },
+                      image: "product1.jpg",
+                      category: "Category 1",
+                    },
+                  ],
+                  loading: false,
+                  error: null,
+                }}
+              />
+            }
+          />
+        </Routes>
+      </MemoryRouter>
+    );
+    console.log(screen.debug());
+
+    // Ensure that the product card is rendered
+    expect(screen.getByText("Product 1")).toBeInTheDocument();
+    expect(screen.getByText("$ 9.99")).toBeInTheDocument();
+    expect(screen.getByText("Rating 4.5 / 5")).toBeInTheDocument();
+    expect(screen.getByText("In Stock: 10")).toBeInTheDocument();
+
+    // Ensure that the product count buttons are rendered
+    expect(screen.getByTestId("count")).toHaveTextContent("1");
+    expect(screen.getByTestId("plusProduct")).toBeInTheDocument();
+    expect(screen.getByTestId("minusProduct")).toBeInTheDocument();
+
+    // Ensure that the "Add To Cart" button is rendered
+    expect(screen.getByText("Add To Cart")).toBeInTheDocument();
+  });
+
+  //   test("clicking next page button updates the URL and content", () => {
+  //     let moreObjects = () => {
+  //       let obj = [];
+  //       for (let i = 0; i < 7; i++) {
+  //         obj.push({
+  //           id: 1,
+  //           title: "Product 1",
+  //           price: 9.99,
+  //           rating: { rate: 4.5, count: 10 },
+  //           image: "product1.jpg",
+  //           category: "Category 1",
+  //         });
+  //       }
+  //       obj.push({
+  //         id: 2,
+  //         title: "Product 2",
+  //         price: 19.99,
+  //         rating: { rate: 4.5, count: 10 },
+  //         image: "product2.jpg",
+  //         category: "Category 2",
+  //       });
+  //       return obj;
+  //     };
+  //     const obj = moreObjects();
+  //     const { container } = render(
+  //       <MemoryRouter initialEntries={["/shop/1"]}>
+  //         <Shop
+  //           productsInCartQuantity={() => 0}
+  //           APIData={{
+  //             data: obj,
+  //             loading: false,
+  //             error: null,
+  //           }}
+  //         />
+  //       </MemoryRouter>
+  //     );
+  //     setTimeout(() => {
+  //       expect(screen.getByText("awvdawdvawvdwava")).toBeInTheDocument();
+
+  //       const nextPageButton = screen.getByText("++");
+  //       fireEvent.click(nextPageButton);
+
+  //       expect(screen.getByText("Product 3")).toBeInTheDocument();
+  //     }, 3000);
+  //   });
+});
 
 describe("SingleProductCard", () => {
   const product = {

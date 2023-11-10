@@ -8,11 +8,11 @@ export default function Shop({
   addToCartFunctionality,
   productsInCartQuantity,
 }) {
-  const [productCategory, setproductCategory] = useState("All");
   const { page } = useParams();
+  const [productCategory, setproductCategory] = useState("All");
   const [products, setProducts] = useState(null);
-  const [currentPage, setCurrentPage] = useState(parseInt(page));
-  const [howManyPages, setHowManyPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(page);
+  const howManyPages = products !== null ? products.length : 0;
   const navigate = useNavigate();
 
   function isAPIDataHere(runIfDataHere) {
@@ -24,7 +24,6 @@ export default function Shop({
       runIfDataHere()
     );
   }
-
   function generateCards() {
     if (products === null) {
       let productsArray = [];
@@ -73,9 +72,6 @@ export default function Shop({
       }
       setProducts(productsArray);
     }
-    if (howManyPages === 0 && products !== null) {
-      setHowManyPages(products.length);
-    }
     if (products !== null) {
       return products[currentPage - 1];
     }
@@ -96,9 +92,8 @@ export default function Shop({
         onChange={(e) => {
           setproductCategory(e.target.value);
           setProducts(null);
-          setHowManyPages(0);
           setCurrentPage(1);
-          navigate("/shop/" + 1);
+          navigate("/shop/1");
         }}
       >
         <option key={0} value="All">
@@ -126,7 +121,7 @@ export default function Shop({
       navigate("/shop/" + (currentPage - 1));
     }
   }
-
+  products === null ? isAPIDataHere(generateCards) : null;
   return (
     <div className="shopPage">
       <Navigation productsInCartQuantity={productsInCartQuantity} />
@@ -137,7 +132,11 @@ export default function Shop({
           {isAPIDataHere(categories)}
         </div>
         <div className="shopProducts">
-          {page == currentPage ? isAPIDataHere(generateCards) : null}
+          {products === null
+            ? null
+            : currentPage === null
+            ? null
+            : products[currentPage - 1]}
         </div>
         <div className="linksToOtherPages">
           <button type="button" onClick={previousPage}>
