@@ -3,9 +3,8 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, test, vi } from "vitest";
 import { SingleProductCard } from "../src/Components/Shop/Shop";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter, Routes, Route } from "react-router-dom";
 import Shop from "../src/Components/Shop/Shop";
-import { Routes, Route } from "react-router-dom";
 
 describe("Shop", () => {
   test("Nav component is rendered", () => {
@@ -121,7 +120,7 @@ describe("Shop", () => {
 
     const nextPageButton = screen.getByText("++");
     await userEvent.click(nextPageButton);
-    //render after next page
+
     const elementsAfterPageChange = queryAllByText("Product 1");
     expect(elementsAfterPageChange).toHaveLength(0);
     expect(screen.getByText("Product 2")).toBeInTheDocument();
@@ -129,9 +128,66 @@ describe("Shop", () => {
 
     const previousPageButton = screen.getByText("--");
     await userEvent.click(previousPageButton);
-    //render after previous page
+
     expect(elements).toHaveLength(6);
     expect(screen.getByText("Page: 1/2")).toBeInTheDocument();
+  });
+
+  test("Categories onclick proper content render", async () => {
+    const { getByRole } = render(
+      <MemoryRouter initialEntries={["/shop/1"]} keyLength={0}>
+        <Routes>
+          <Route
+            path="/shop/:page"
+            element={
+              <Shop
+                productsInCartQuantity={() => 0}
+                APIData={{
+                  data: [
+                    {
+                      key: 1,
+                      id: 1,
+                      title: "Product 1",
+                      price: 9.99,
+                      rating: { rate: 4.5, count: 10 },
+                      image: "product1.jpg",
+                      category: "Cat 1",
+                    },
+                    {
+                      key: 2,
+                      id: 2,
+                      title: "Product 2",
+                      price: 9.99,
+                      rating: { rate: 4.5, count: 10 },
+                      image: "product1.jpg",
+                      category: "Cat 2",
+                    },
+                  ],
+                  loading: false,
+                  error: null,
+                }}
+              />
+            }
+          />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText("Cat 1")).toBeInTheDocument();
+    expect(screen.getByText("Cat 2")).toBeInTheDocument();
+    expect(screen.getByText("All")).toBeInTheDocument();
+
+    const selectElement = getByRole("combobox");
+    await userEvent.selectOptions(selectElement, "Cat 1");
+
+    expect(screen.getByText("Product 1")).toBeInTheDocument();
+    const product2Element = screen.queryByText("Product 2");
+    expect(product2Element).toBeNull();
+
+    await userEvent.selectOptions(selectElement, "Cat 2");
+    expect(screen.getByText("Product 2")).toBeInTheDocument();
+    const product1Element = screen.queryByText("Product 1");
+    expect(product1Element).toBeNull();
   });
 });
 
