@@ -9,7 +9,6 @@ import ErrorPage from "./ErrorPage";
 function App() {
   const callAPI = FakeStoreApi();
   const [data, setData] = useState([]);
-  const [quantityRefresh, setQuantityRefresh] = useState(true);
 
   const addToCartFunctionality = (
     id,
