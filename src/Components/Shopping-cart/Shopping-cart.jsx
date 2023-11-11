@@ -4,14 +4,11 @@ import Navigation from "../Navigation/Navigation";
 import { useState, useEffect } from "react";
 
 export default function ShoppingCart({
-  APIData,
   data,
   updatedData,
   productsInCartQuantity,
   updateQuantity,
 }) {
-  console.log(data);
-
   return (
     <div className="shoppingCartPage">
       <Navigation productsInCartQuantity={productsInCartQuantity} />
