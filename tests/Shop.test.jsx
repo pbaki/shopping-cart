@@ -66,6 +66,73 @@ describe("Shop", () => {
 
     expect(screen.getByText("Add To Cart")).toBeInTheDocument();
   });
+
+  test("clicking next and previous page button updates the URL and content", async () => {
+    let moreObjects = () => {
+      let obj = [];
+      for (let i = 1; i < 7; i++) {
+        obj.push({
+          key: i,
+          id: i,
+          title: "Product 1",
+          price: 9.99,
+          rating: { rate: 4.5, count: 10 },
+          image: "product1.jpg",
+          category: "Category 1",
+        });
+      }
+      obj.push({
+        key: 7,
+        id: 7,
+        title: "Product 2",
+        price: 19.99,
+        rating: { rate: 4.5, count: 3 },
+        image: "product2.jpg",
+        category: "Category 2",
+      });
+      return obj;
+    };
+    const obj = moreObjects();
+    const { queryAllByText } = render(
+      <MemoryRouter initialEntries={["/shop/1"]} keyLength={0}>
+        <Routes>
+          <Route
+            path="/shop/:page"
+            element={
+              <Shop
+                productsInCartQuantity={() => 0}
+                APIData={{
+                  data: obj,
+                  loading: false,
+                  error: null,
+                }}
+              />
+            }
+          />
+        </Routes>
+      </MemoryRouter>
+    );
+    //render before next page
+    const elements = queryAllByText("Product 1");
+
+    expect(elements).toHaveLength(6);
+    expect(screen.getByText("++")).toBeInTheDocument();
+    expect(screen.getByText("Page: 1/2")).toBeInTheDocument();
+
+    const nextPageButton = screen.getByText("++");
+    await userEvent.click(nextPageButton);
+    //render after next page
+    const elementsAfterPageChange = queryAllByText("Product 1");
+    expect(elementsAfterPageChange).toHaveLength(0);
+    expect(screen.getByText("Product 2")).toBeInTheDocument();
+    expect(screen.getByText("Page: 2/2")).toBeInTheDocument();
+
+    const previousPageButton = screen.getByText("--");
+    await userEvent.click(previousPageButton);
+    //render after previous page
+    expect(elements).toHaveLength(6);
+    expect(screen.getByText("Page: 1/2")).toBeInTheDocument();
+  });
 });
 
 describe("SingleProductCard", () => {
