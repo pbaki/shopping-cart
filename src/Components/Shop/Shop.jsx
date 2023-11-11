@@ -11,7 +11,7 @@ export default function Shop({
   const { page } = useParams();
   const [productCategory, setproductCategory] = useState("All");
   const [products, setProducts] = useState(null);
-  const [currentPage, setCurrentPage] = useState(page);
+  const [currentPage, setCurrentPage] = useState(parseInt(page));
   const howManyPages = products !== null ? products.length : 0;
   const navigate = useNavigate();
 
