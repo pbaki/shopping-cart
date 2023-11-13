@@ -1,17 +1,10 @@
 import { Link } from "react-router-dom";
 import "./Shopping-cart.css";
-import Navigation from "../Navigation/Navigation";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-export default function ShoppingCart({
-  data,
-  updatedData,
-  productsInCartQuantity,
-  updateQuantity,
-}) {
+export default function ShoppingCart({ data, updatedData, updateQuantity }) {
   return (
     <div className="shoppingCartPage">
-      <Navigation productsInCartQuantity={productsInCartQuantity} />
       {data.length > 0 ? (
         <CartWithItems
           products={data}

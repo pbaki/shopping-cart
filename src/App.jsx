@@ -1,6 +1,7 @@
 import { useState, useEffect, createContext } from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
+import Navigation from "./Components/Navigation/Navigation";
 import Homepage from "./Components/Homepage/Homepage";
 import Shop from "./Components/Shop/Shop";
 import ShoppingCart from "./Components/Shopping-cart/Shopping-cart";
@@ -60,33 +61,39 @@ function App() {
       <Route
         path="/"
         element={
-          <Homepage
-            APIData={callAPI}
-            productsInCartQuantity={productsInCartQuantity}
-          />
+          <Navigation productsInCartQuantity={productsInCartQuantity}>
+            <Homepage
+              APIData={callAPI}
+              productsInCartQuantity={productsInCartQuantity}
+            />
+          </Navigation>
         }
       ></Route>
       <Route
         path="/shop/:page"
         element={
-          <ShopContext.Provider value={{ addToCartFunctionality }}>
-            <Shop
-              APIData={callAPI}
-              addToCartFunctionality={addToCartFunctionality}
-              productsInCartQuantity={productsInCartQuantity}
-            />
-          </ShopContext.Provider>
+          <Navigation productsInCartQuantity={productsInCartQuantity}>
+            <ShopContext.Provider value={{ addToCartFunctionality }}>
+              <Shop
+                APIData={callAPI}
+                addToCartFunctionality={addToCartFunctionality}
+                productsInCartQuantity={productsInCartQuantity}
+              />
+            </ShopContext.Provider>
+          </Navigation>
         }
       ></Route>
       <Route
         path="/shopping-cart"
         element={
-          <ShoppingCart
-            APIData={callAPI}
-            data={data}
-            updatedData={updatedData}
-            productsInCartQuantity={productsInCartQuantity}
-          />
+          <Navigation productsInCartQuantity={productsInCartQuantity}>
+            <ShoppingCart
+              APIData={callAPI}
+              data={data}
+              updatedData={updatedData}
+              productsInCartQuantity={productsInCartQuantity}
+            />
+          </Navigation>
         }
       ></Route>
       <Route path="*" element={<ErrorPage />} />

@@ -1,9 +1,8 @@
 import { useParams, useNavigate } from "react-router-dom";
 import "./Shop.css";
-import Navigation from "../Navigation/Navigation";
 import { useContext, useState } from "react";
 
-export default function Shop({ APIData, productsInCartQuantity }) {
+export default function Shop({ APIData }) {
   const { page } = useParams();
   const [productCategory, setproductCategory] = useState("All");
   const [products, setProducts] = useState(null);
@@ -118,7 +117,6 @@ export default function Shop({ APIData, productsInCartQuantity }) {
   products === null ? isAPIDataHere(generateCards) : null;
   return (
     <div className="shopPage">
-      <Navigation productsInCartQuantity={productsInCartQuantity} />
       <div className="shopPageContent">
         <h1>Shop</h1>
         <div className="shopPageProductsNavigation">

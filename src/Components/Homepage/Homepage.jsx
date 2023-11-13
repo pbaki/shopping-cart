@@ -1,11 +1,9 @@
 import { Link } from "react-router-dom";
-import Navigation from "../Navigation/Navigation";
 import "./Homepage.css";
 
-export default function Homepage({ productsInCartQuantity }) {
+export default function Homepage() {
   return (
     <div className="mainPage">
-      <Navigation productsInCartQuantity={productsInCartQuantity} />
       <div className="homeContent">
         <h1>Welcome To Store Name</h1>
         <p>
