@@ -31,7 +31,7 @@ export default function Navigation({ productsInCartQuantity, children }) {
           <div className="navCartProductCount">{quantity}</div>
         </div>
       </div>
-      <main>{children}</main>
+      <main className="Content">{children}</main>
     </>
   );
 }
