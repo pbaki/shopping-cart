@@ -1,13 +1,9 @@
 import { useParams, useNavigate } from "react-router-dom";
 import "./Shop.css";
 import Navigation from "../Navigation/Navigation";
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 
-export default function Shop({
-  APIData,
-  addToCartFunctionality,
-  productsInCartQuantity,
-}) {
+export default function Shop({ APIData, productsInCartQuantity }) {
   const { page } = useParams();
   const [productCategory, setproductCategory] = useState("All");
   const [products, setProducts] = useState(null);
@@ -44,7 +40,6 @@ export default function Shop({
                 rating={product.rating.rate}
                 count={product.rating.count}
                 image={product.image}
-                addToCartFunctionality={addToCartFunctionality}
               />
             );
           }
@@ -65,7 +60,6 @@ export default function Shop({
               rating={product.rating.rate}
               count={product.rating.count}
               image={product.image}
-              addToCartFunctionality={addToCartFunctionality}
             />
           );
         });
@@ -210,13 +204,15 @@ function SingleProductCard({
         <button
           className="addProductToCart"
           onClick={() => {
-            addToCartFunctionality(
-              id,
-              title,
-              price,
-              productCount,
-              image,
-              count
+            useContext(
+              addToCartFunctionality(
+                id,
+                title,
+                price,
+                productCount,
+                image,
+                count
+              )
             );
           }}
         >

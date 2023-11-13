@@ -1,10 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, createContext } from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Homepage from "./Components/Homepage/Homepage";
 import Shop from "./Components/Shop/Shop";
 import ShoppingCart from "./Components/Shopping-cart/Shopping-cart";
 import ErrorPage from "./ErrorPage";
+
+export const ShopContext = createContext({
+  addToCartFunctionality: () => {},
+});
 
 function App() {
   const callAPI = FakeStoreApi();
@@ -65,11 +69,13 @@ function App() {
       <Route
         path="/shop/:page"
         element={
-          <Shop
-            APIData={callAPI}
-            addToCartFunctionality={addToCartFunctionality}
-            productsInCartQuantity={productsInCartQuantity}
-          />
+          <ShopContext.Provider value={{ addToCartFunctionality }}>
+            <Shop
+              APIData={callAPI}
+              addToCartFunctionality={addToCartFunctionality}
+              productsInCartQuantity={productsInCartQuantity}
+            />
+          </ShopContext.Provider>
         }
       ></Route>
       <Route
