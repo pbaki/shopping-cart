@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import "./Shop.css";
 import { useContext, useState } from "react";
+import { ShopContext } from "../../App";
 
 export default function Shop({ APIData }) {
   const { page } = useParams();
@@ -144,17 +145,9 @@ export default function Shop({ APIData }) {
   );
 }
 
-function SingleProductCard({
-  id,
-  title,
-  price,
-  rating,
-  count,
-  image,
-  addToCartFunctionality,
-}) {
+function SingleProductCard({ id, title, price, rating, count, image }) {
   const [productCount, setProductCount] = useState(1);
-
+  const { addToCartFunctionality } = useContext(ShopContext);
   function increaseProductCount() {
     if (productCount < count) {
       setProductCount(productCount + 1);
@@ -202,15 +195,13 @@ function SingleProductCard({
         <button
           className="addProductToCart"
           onClick={() => {
-            useContext(
-              addToCartFunctionality(
-                id,
-                title,
-                price,
-                productCount,
-                image,
-                count
-              )
+            addToCartFunctionality(
+              id,
+              title,
+              price,
+              productCount,
+              image,
+              count
             );
           }}
         >
