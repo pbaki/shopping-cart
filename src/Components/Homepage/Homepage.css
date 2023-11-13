@@ -2,10 +2,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 20px;
   flex-grow: 1;
 }
 .homeContent h1 {
-  margin-top: 4%;
+  margin-top: 3%;
   line-height: 2;
   font-weight: bold;
   font-size: 2rem;
