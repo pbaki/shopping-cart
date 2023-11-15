@@ -1,11 +1,20 @@
 import { useParams, useNavigate } from "react-router-dom";
 import "./Shop.css";
-import { useContext, useState } from "react";
+import { useContext, useState, useReducer } from "react";
 import { ShopContext } from "../../App";
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "Change_Product_Category": {
+      return action.nextCategory;
+    }
+  }
+  throw Error("Unknown action: " + action.type);
+}
 
 export default function Shop({ APIData }) {
   const { page } = useParams();
-  const [productCategory, setproductCategory] = useState("All");
+  const [productCategory, dispatch] = useReducer(reducer, "All");
   const [products, setProducts] = useState(null);
   const [currentPage, setCurrentPage] = useState(parseInt(page));
   const howManyPages = products !== null ? products.length : 0;
@@ -84,7 +93,10 @@ export default function Shop({ APIData }) {
         id="selectProducts"
         value={productCategory}
         onChange={(e) => {
-          setproductCategory(e.target.value);
+          dispatch({
+            type: "Change_Product_Category",
+            nextCategory: e.target.value,
+          });
           setProducts(null);
           setCurrentPage(1);
           navigate("/shop/1");
