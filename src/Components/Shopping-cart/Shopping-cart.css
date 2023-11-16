@@ -62,14 +62,23 @@
 /* Not Empty Cart Styling */
 
 .cartItemsCheckout {
-  align-self: center;
   display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }
+
 .cartItems {
   display: flex;
   flex-direction: column;
   padding: 20px 30px;
-  gap: 10px;
+  gap: 15px;
+}
+
+.checkout {
+  width: 0px;
+  font-size: 2rem;
+  margin-top: 20px;
+  white-space: nowrap;
 }
 .cartProduct {
   position: relative;
