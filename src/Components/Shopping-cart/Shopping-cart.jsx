@@ -20,6 +20,11 @@ export default function ShoppingCart({ data, updatedData, updateQuantity }) {
 function CartWithItems({ products, updatedData }) {
   const [cartProducts, setCartProducts] = useState(products);
 
+  const totalPrice = cartProducts.reduce(
+    (total, product) => total + product.price * product.quantity,
+    0
+  );
+
   function increaseProductCount(id) {
     const updatedCartProducts = cartProducts.map((item) => {
       if (item.id === id && item.quantity < item.totalCount) {
@@ -104,7 +109,16 @@ function CartWithItems({ products, updatedData }) {
       <div className="cartItems">
         {products.length > 0 ? displayProducts() : null}
       </div>
-      <div className="checkout"></div>
+      <div className="checkout">
+        <div className="totalPrice">
+          {
+            <>
+              <p>Total Price: </p>{" "}
+              <p style={{ fontWeight: 700, marginTop: 10 }}>{totalPrice} $</p>
+            </>
+          }
+        </div>
+      </div>
     </div>
   );
 }
