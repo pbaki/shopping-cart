@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./Shop.css";
 import { useContext, useState, useReducer } from "react";
 import { ShopContext } from "../../App";
+import Rating from "@mui/material/Rating";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -182,7 +183,16 @@ function SingleProductCard({ id, title, price, rating, count, image }) {
       <p className="productPrice" style={{ fontSize: "1.4rem" }}>
         $ {price}
       </p>
-      <p className="productRating">Rating {rating} / 5</p>
+      <p className="productRating">
+        <Rating
+          name="half-rating-read"
+          defaultValue={() => {
+            return Math.round(rating * 2) / 2;
+          }}
+          precision={0.5}
+          readOnly
+        />
+      </p>
       <p className="productCount">In Stock: {count}</p>
       <div className="addingProductsToCart">
         <div className="howManyItems">
