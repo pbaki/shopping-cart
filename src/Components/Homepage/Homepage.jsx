@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
 import "./Homepage.css";
+import { useEffect } from "react";
 
-export default function Homepage() {
+export default function Homepage({ title }) {
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
   return (
     <div className="mainPage">
       <div className="homeContent">

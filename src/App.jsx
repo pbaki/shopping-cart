@@ -62,7 +62,7 @@ function App() {
         path="/"
         element={
           <Navigation productsInCartQuantity={productsInCartQuantity}>
-            <Homepage APIData={callAPI} />
+            <Homepage title="Homepage" APIData={callAPI} />
           </Navigation>
         }
       ></Route>
@@ -72,6 +72,7 @@ function App() {
           <Navigation productsInCartQuantity={productsInCartQuantity}>
             <ShopContext.Provider value={{ addToCartFunctionality }}>
               <Shop
+                title="Shop"
                 APIData={callAPI}
                 addToCartFunctionality={addToCartFunctionality}
               />
@@ -84,6 +85,7 @@ function App() {
         element={
           <Navigation productsInCartQuantity={productsInCartQuantity}>
             <ShoppingCart
+              title="Cart"
               APIData={callAPI}
               data={data}
               updatedData={updatedData}

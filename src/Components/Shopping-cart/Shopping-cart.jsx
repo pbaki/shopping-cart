@@ -1,8 +1,16 @@
 import { Link } from "react-router-dom";
 import "./Shopping-cart.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function ShoppingCart({ data, updatedData, updateQuantity }) {
+export default function ShoppingCart({
+  title,
+  data,
+  updatedData,
+  updateQuantity,
+}) {
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
   return (
     <div className="shoppingCartPage">
       {data.length > 0 ? (

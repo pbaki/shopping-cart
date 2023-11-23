@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import "./Shop.css";
-import { useContext, useState, useReducer } from "react";
+import { useContext, useState, useReducer, useEffect } from "react";
 import { ShopContext } from "../../App";
 import Rating from "@mui/material/Rating";
 
@@ -13,13 +13,17 @@ function reducer(state, action) {
   throw Error("Unknown action: " + action.type);
 }
 
-export default function Shop({ APIData }) {
+export default function Shop({ APIData, title }) {
   const { page } = useParams();
   const [productCategory, dispatch] = useReducer(reducer, "All");
   const [products, setProducts] = useState(null);
   const [currentPage, setCurrentPage] = useState(parseInt(page));
   const howManyPages = products !== null ? products.length : 0;
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
 
   function isAPIDataHere(runIfDataHere) {
     return APIData.error !== null ? (
