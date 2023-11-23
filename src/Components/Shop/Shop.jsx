@@ -190,9 +190,7 @@ function SingleProductCard({ id, title, price, rating, count, image }) {
       <p className="productRating">
         <Rating
           name="half-rating-read"
-          defaultValue={() => {
-            return Math.round(rating * 2) / 2;
-          }}
+          defaultValue={Math.round(rating * 2) / 2}
           precision={0.5}
           readOnly
         />
