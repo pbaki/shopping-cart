@@ -19,12 +19,15 @@ export default function Shop({ APIData, title }) {
   const [products, setProducts] = useState(null);
   const [currentPage, setCurrentPage] = useState(parseInt(page));
   const howManyPages = products !== null ? products.length : 0;
+  const [textSearch, setTextSearch] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
     document.title = title;
   }, [title]);
-
+  useEffect(() => {
+    products === null ? isAPIDataHere(generateCards) : null;
+  }, [products]);
   function isAPIDataHere(runIfDataHere) {
     return APIData.error !== null ? (
       <div className="errorMsg">APIData.error</div>
@@ -132,9 +135,13 @@ export default function Shop({ APIData, title }) {
       navigate("/shop/" + (currentPage - 1));
     }
   }
-  products === null ? isAPIDataHere(generateCards) : null;
+  function getInput(text) {
+    setTextSearch(text);
+  }
+
   return (
     <div className="shopPage">
+      <SearchProducts getInput={getInput} />
       <div className="shopPageContent">
         <h1>Shop</h1>
         <div className="shopPageProductsNavigation">
@@ -235,4 +242,30 @@ function SingleProductCard({ id, title, price, rating, count, image }) {
     </div>
   );
 }
-export { SingleProductCard };
+function SearchProducts({ getInput }) {
+  return (
+    <div className="searchProducts">
+      <form>
+        <label htmlFor="search">
+          <input
+            type="text"
+            name="search"
+            id="search"
+            placeholder="Search for Products..."
+            onChange={(e) => {
+              getInput(e.target.value);
+            }}
+          />
+        </label>
+        <button
+          type="submit"
+          onClick={(e) => {
+            e.preventDefault();
+          }}
+        >
+          Search
+        </button>
+      </form>
+    </div>
+  );
+}
