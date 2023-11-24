@@ -10,7 +10,7 @@ export default function Navigation({ productsInCartQuantity, children }) {
   }, [productsInCartQuantity]);
   return (
     <>
-      <div className="navContainer">
+      <nav className="navContainer">
         <div className="navStoreName">
           <Link className="link StoreName" to="/">
             Store Name
@@ -30,7 +30,7 @@ export default function Navigation({ productsInCartQuantity, children }) {
           </Link>
           <div className="navCartProductCount">{quantity}</div>
         </div>
-      </div>
+      </nav>
       <main className="Content">{children}</main>
     </>
   );
