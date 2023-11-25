@@ -67,6 +67,7 @@ function CartWithItems({ products, updatedData }) {
         <div className="cartProduct" key={product.id}>
           <button
             className="removeFromCart"
+            aria-label="Delete product"
             onClick={() => {
               const removed = cartProducts.filter((item) => {
                 return item.id !== product.id;
@@ -84,23 +85,27 @@ function CartWithItems({ products, updatedData }) {
             <div className="productName">{product.title}</div>
             <div className="quantityPrice">
               <div className="howManyItems">
-                <div
+                <button
                   className="minusProduct"
                   onClick={() => {
                     decreaseProductCount(product.id);
                   }}
+                  aria-label="Subtract product"
                 >
                   -
-                </div>
+                </button>
+
                 <div className="quantity">{product.quantity}</div>
-                <div
+
+                <button
                   className="plusProduct"
                   onClick={() => {
                     increaseProductCount(product.id);
                   }}
+                  aria-label="Add product"
                 >
                   +
-                </div>
+                </button>
               </div>
               <div className="price">
                 {"$ " + (product.price * product.quantity).toFixed(2)}

@@ -27,7 +27,7 @@ export default function Shop({ APIData, title }) {
   }, [title]);
   useEffect(() => {
     products === null ? isAPIDataHere(generateCards) : null;
-  }, [products]);
+  }, [products, APIData]);
   function isAPIDataHere(runIfDataHere) {
     return APIData.error !== null ? (
       <div className="errorMsg">APIData.error</div>
@@ -156,11 +156,15 @@ export default function Shop({ APIData, title }) {
             : products[currentPage - 1]}
         </div>
         <div className="linksToOtherPages">
-          <button type="button" onClick={previousPage}>
+          <button
+            aria-label="Previous page"
+            type="button"
+            onClick={previousPage}
+          >
             --
           </button>
           <p>Page: {currentPage + "/" + howManyPages}</p>
-          <button type="button" onClick={nextPage}>
+          <button aria-label="Next Page" type="button" onClick={nextPage}>
             ++
           </button>
         </div>
@@ -205,23 +209,28 @@ function SingleProductCard({ id, title, price, rating, count, image }) {
       <p className="productCount">In Stock: {count}</p>
       <div className="addingProductsToCart">
         <div className="howManyItems">
-          <div
+          <button
             className="minusProduct"
             onClick={decreaseProductCount}
             data-testid={"minusProduct"}
+            aria-label="Decrease product count"
+            tabIndex={0}
           >
             -
-          </div>
+          </button>
           <div className="productAddCount" data-testid={"count"}>
             {productCount}
           </div>
-          <div
+          <button
+            tabIndex={0}
+            aria-label="Increase product count"
             className="plusProduct"
             data-testid={"plusProduct"}
             onClick={increaseProductCount}
+            id="label"
           >
             +
-          </div>
+          </button>
         </div>
         <button
           className="addProductToCart"
