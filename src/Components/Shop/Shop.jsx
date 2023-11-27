@@ -141,9 +141,11 @@ export default function Shop({ APIData, title }) {
 
   return (
     <div className="shopPage">
-      <SearchProducts getInput={getInput} />
       <div className="shopPageContent">
-        <h1>Shop</h1>
+        <div className="shopMain">
+          <h1>Shop</h1>
+          <SearchProducts getInput={getInput} />
+        </div>
         <div className="shopPageProductsNavigation">
           <p>Products - </p>
           {isAPIDataHere(categories)}
