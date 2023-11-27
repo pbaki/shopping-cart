@@ -14,6 +14,7 @@ function reducer(state, action) {
 }
 
 export default function Shop({ APIData, title }) {
+  const [data, setData] = useState(APIData);
   const { page } = useParams();
   const [productCategory, dispatch] = useReducer(reducer, "All");
   const [products, setProducts] = useState(null);
@@ -23,11 +24,31 @@ export default function Shop({ APIData, title }) {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (APIData.data !== null) {
+      const filteredData = APIData.data.filter((e) =>
+        e.title.toLowerCase().includes(textSearch.toLowerCase())
+      );
+      setData({
+        ...APIData,
+        data: filteredData,
+      });
+    }
+    dispatch({
+      type: "Change_Product_Category",
+      nextCategory: "All",
+    });
+  }, [textSearch]);
+  useEffect(() => {
     document.title = title;
   }, [title]);
+
   useEffect(() => {
-    products === null ? isAPIDataHere(generateCards) : null;
-  }, [products, APIData]);
+    if (data.data !== null) {
+      isAPIDataHere(generateCards);
+    }
+    setCurrentPage(1);
+  }, [APIData, textSearch, productCategory, data]);
+
   function isAPIDataHere(runIfDataHere) {
     return APIData.error !== null ? (
       <div className="errorMsg">APIData.error</div>
@@ -37,32 +58,12 @@ export default function Shop({ APIData, title }) {
       runIfDataHere()
     );
   }
+
   function generateCards() {
-    if (products === null) {
-      let productsArray = [];
-      if (productCategory !== "All") {
-        APIData.data.forEach((product) => {
-          if (product.category === productCategory) {
-            if (productsArray.length === 0) {
-              productsArray.push([]);
-            } else if (productsArray[productsArray.length - 1].length > 5) {
-              productsArray.push([]);
-            }
-            productsArray[productsArray.length - 1].push(
-              <SingleProductCard
-                id={product.id}
-                key={product.id}
-                title={product.title}
-                price={product.price}
-                rating={product.rating.rate}
-                count={product.rating.count}
-                image={product.image}
-              />
-            );
-          }
-        });
-      } else if (productCategory === "All") {
-        APIData.data.forEach((product) => {
+    let productsArray = [];
+    if (productCategory !== "All") {
+      data.data.forEach((product) => {
+        if (product.category === productCategory) {
           if (productsArray.length === 0) {
             productsArray.push([]);
           } else if (productsArray[productsArray.length - 1].length > 5) {
@@ -79,10 +80,30 @@ export default function Shop({ APIData, title }) {
               image={product.image}
             />
           );
-        });
-      }
-      setProducts(productsArray);
+        }
+      });
+    } else if (productCategory === "All") {
+      data.data.forEach((product) => {
+        if (productsArray.length === 0) {
+          productsArray.push([]);
+        } else if (productsArray[productsArray.length - 1].length > 5) {
+          productsArray.push([]);
+        }
+        productsArray[productsArray.length - 1].push(
+          <SingleProductCard
+            id={product.id}
+            key={product.id}
+            title={product.title}
+            price={product.price}
+            rating={product.rating.rate}
+            count={product.rating.count}
+            image={product.image}
+          />
+        );
+      });
     }
+    setProducts(productsArray);
+
     if (products !== null) {
       return products[currentPage - 1];
     }
@@ -90,11 +111,14 @@ export default function Shop({ APIData, title }) {
 
   function categories() {
     let categoryList = [];
-    APIData.data.forEach((item) => {
-      if (!categoryList.includes(item.category)) {
-        categoryList.push(item.category);
-      }
-    });
+    if (data.data !== null) {
+      data.data.forEach((item) => {
+        if (!categoryList.includes(item.category)) {
+          categoryList.push(item.category);
+        }
+      });
+    }
+
     return (
       <select
         name="selectProducts"
@@ -254,6 +278,10 @@ function SingleProductCard({ id, title, price, rating, count, image }) {
   );
 }
 function SearchProducts({ getInput }) {
+  const [txt, setTxt] = useState("");
+  function handleInput(e) {
+    setTxt(e.target.value);
+  }
   return (
     <div className="searchProducts">
       <form>
@@ -263,15 +291,14 @@ function SearchProducts({ getInput }) {
             name="search"
             id="search"
             placeholder="Search for Products..."
-            onChange={(e) => {
-              getInput(e.target.value);
-            }}
+            onChange={handleInput}
           />
         </label>
         <button
           type="submit"
           onClick={(e) => {
             e.preventDefault();
+            getInput(txt);
           }}
         >
           Search
