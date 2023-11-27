@@ -23,6 +23,31 @@
   margin-right: auto;
   padding-right: 64px; /* 64 h1 Shop width */
 }
+.searchProducts > form {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+#search {
+  padding: 7px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.searchProducts > form > button {
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: #fff;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.searchProducts > form > button:hover {
+  background-color: #2980b9;
+}
 
 .shopPageContent p {
   font-size: 1.2rem;
