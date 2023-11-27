@@ -37,21 +37,22 @@ export default function Shop({ APIData, title }) {
       type: "Change_Product_Category",
       nextCategory: "All",
     });
-  }, [textSearch]);
+  }, [textSearch, APIData]);
+
   useEffect(() => {
     document.title = title;
   }, [title]);
 
   useEffect(() => {
     if (data.data !== null) {
-      isAPIDataHere(generateCards);
+      generateCards();
+      setCurrentPage(1);
     }
-    setCurrentPage(1);
-  }, [APIData, textSearch, productCategory, data]);
+  }, [data, textSearch, productCategory]);
 
   function isAPIDataHere(runIfDataHere) {
     return APIData.error !== null ? (
-      <div className="errorMsg">APIData.error</div>
+      <div className="errorMsg">Error: Couldn't load products</div>
     ) : APIData.loading === true ? (
       <div className="Loading">Loading...</div>
     ) : (
@@ -278,9 +279,8 @@ function SingleProductCard({ id, title, price, rating, count, image }) {
   );
 }
 function SearchProducts({ getInput }) {
-  const [txt, setTxt] = useState("");
   function handleInput(e) {
-    setTxt(e.target.value);
+    getInput(e.target.value);
   }
   return (
     <div className="searchProducts">
@@ -294,15 +294,6 @@ function SearchProducts({ getInput }) {
             onChange={handleInput}
           />
         </label>
-        <button
-          type="submit"
-          onClick={(e) => {
-            e.preventDefault();
-            getInput(txt);
-          }}
-        >
-          Search
-        </button>
       </form>
     </div>
   );
