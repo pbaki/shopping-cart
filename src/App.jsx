@@ -62,7 +62,7 @@ function App() {
         path="/"
         element={
           <Navigation productsInCartQuantity={productsInCartQuantity}>
-            <Homepage title="Homepage" APIData={callAPI} />
+            <Homepage title="Homepage" />
           </Navigation>
         }
       ></Route>
@@ -84,12 +84,7 @@ function App() {
         path="/shopping-cart"
         element={
           <Navigation productsInCartQuantity={productsInCartQuantity}>
-            <ShoppingCart
-              title="Cart"
-              APIData={callAPI}
-              data={data}
-              updatedData={updatedData}
-            />
+            <ShoppingCart title="Cart" data={data} updatedData={updatedData} />
           </Navigation>
         }
       ></Route>
