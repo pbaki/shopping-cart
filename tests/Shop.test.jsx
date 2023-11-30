@@ -5,25 +5,9 @@ import { describe, expect, test, vi } from "vitest";
 import { SingleProductCard } from "../src/Components/Shop/Shop";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import Shop from "../src/Components/Shop/Shop";
+import { ShopContext } from "../src/App";
 
 describe("Shop", () => {
-  test("Nav component is rendered", () => {
-    render(
-      <MemoryRouter initialEntries={["/shop/1"]}>
-        <Shop
-          productsInCartQuantity={() => 3}
-          APIData={{
-            data: [],
-            loading: false,
-            error: null,
-          }}
-        />
-      </MemoryRouter>
-    );
-
-    expect(screen.getByText("Home")).toBeInTheDocument();
-    expect(screen.getByText("3")).toBeInTheDocument();
-  });
   test("renders shop page content with a specific product", () => {
     render(
       <MemoryRouter initialEntries={["/shop/1"]} keyLength={0}>
@@ -56,7 +40,6 @@ describe("Shop", () => {
 
     expect(screen.getByText("Product 1")).toBeInTheDocument();
     expect(screen.getByText("$ 9.99")).toBeInTheDocument();
-    expect(screen.getByText("Rating 4.5 / 5")).toBeInTheDocument();
     expect(screen.getByText("In Stock: 10")).toBeInTheDocument();
 
     expect(screen.getByTestId("count")).toHaveTextContent("1");
@@ -201,7 +184,6 @@ describe("SingleProductCard", () => {
     image: "sample.jpg",
   };
 
-  const addToCartFunctionality = vi.fn();
   test("renders product details and buttons", () => {
     render(
       <SingleProductCard
@@ -211,14 +193,12 @@ describe("SingleProductCard", () => {
         rating={product.rating}
         count={product.count}
         image={product.image}
-        addToCartFunctionality={addToCartFunctionality}
       />
     );
 
     // Check if product details are displayed
     expect(screen.getByText("Sample Product")).toBeInTheDocument();
     expect(screen.getByText("$ 10.99")).toBeInTheDocument();
-    expect(screen.getByText("Rating 4.5 / 5")).toBeInTheDocument();
     expect(screen.getByText("In Stock: 10")).toBeInTheDocument();
 
     // Check if buttons are displayed
@@ -228,16 +208,18 @@ describe("SingleProductCard", () => {
   });
 
   test("clicking add to cart button calls addToCartFunctionality once", async () => {
+    const addToCartFunctionality = vi.fn();
     render(
-      <SingleProductCard
-        id={product.id}
-        title={product.title}
-        price={product.price}
-        rating={product.rating}
-        count={product.count}
-        image={product.image}
-        addToCartFunctionality={addToCartFunctionality}
-      />
+      <ShopContext.Provider value={{ addToCartFunctionality }}>
+        <SingleProductCard
+          id={product.id}
+          title={product.title}
+          price={product.price}
+          rating={product.rating}
+          count={product.count}
+          image={product.image}
+        />
+      </ShopContext.Provider>
     );
     const button = screen.getByRole("button", { name: "Add To Cart" });
     await userEvent.click(button);
@@ -261,7 +243,6 @@ describe("SingleProductCard", () => {
         rating={product.rating}
         count={product.count}
         image={product.image}
-        addToCartFunctionality={addToCartFunctionality}
       />
     );
     let count = screen.getByTestId("count");

@@ -200,7 +200,7 @@ export default function Shop({ APIData, title }) {
   );
 }
 
-function SingleProductCard({ id, title, price, rating, count, image }) {
+export function SingleProductCard({ id, title, price, rating, count, image }) {
   const [productCount, setProductCount] = useState(1);
   const { addToCartFunctionality } = useContext(ShopContext);
   function increaseProductCount() {
