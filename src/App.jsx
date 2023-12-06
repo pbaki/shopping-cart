@@ -35,7 +35,10 @@ function App() {
       const ifThere = prevData.find((item) => item.id === newData.id);
       if (ifThere) {
         return prevData.map((item) => {
-          if (item.id === newData.id) {
+          if (
+            item.id === newData.id &&
+            item.quantity + newData.quantity <= item.totalCount
+          ) {
             return { ...item, quantity: item.quantity + newData.quantity };
           }
           return item;
