@@ -105,7 +105,10 @@ section {
   display: block;
 }
 body {
+  max-width: 4000px;
   line-height: 1;
+  margin: auto;
+  background-color: rgb(223, 223, 223);
 }
 html,
 body,

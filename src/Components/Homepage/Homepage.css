@@ -7,9 +7,10 @@
 }
 .homeContent h1 {
   margin-top: 3%;
-  line-height: 2;
+  line-height: 1.5;
   font-weight: bold;
   font-size: 2rem;
+  text-align: center;
 }
 .homeContent p {
   width: 60%;

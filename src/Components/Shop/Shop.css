@@ -58,6 +58,9 @@
   align-items: center;
   gap: 10px;
 }
+.shopPageProductsNavigation > p {
+  text-wrap: nowrap;
+}
 #selectProducts {
   width: 200px;
   display: inline-block;
@@ -72,9 +75,7 @@
   margin-top: 15px;
 }
 .productCard {
-  flex: 1;
-  max-width: 400px;
-  min-width: 300px;
+  width: calc(100% / 4);
   padding: 20px 40px;
   display: flex;
   flex-direction: column;
@@ -187,7 +188,6 @@
 
 #selectProducts {
   background-color: #808080;
-
   border: none;
   color: white;
   font-size: 1.2rem;
@@ -199,7 +199,7 @@
   transition: background-color 0.3s, color 0.3s;
   background-image: url(../../Assets/chevron-down.svg);
   background-repeat: no-repeat;
-  background-position: 164px 8px;
+  background-position: 170px 8px;
 }
 
 #selectProducts:hover {
@@ -235,4 +235,31 @@
 
 .linksToOtherPages > button:hover {
   background-color: #227ab4;
+}
+
+@media (max-width: 1200px) {
+  .productCard {
+    width: 250px;
+  }
+}
+@media (max-width: 400px) {
+  .shopPageContent {
+    padding: 0px 20px;
+  }
+  .productCard {
+    padding: 5px 10px;
+    width: 95%;
+  }
+  .searchProducts {
+    padding-right: 0px; /* 64 h1 Shop width */
+  }
+  #selectProducts {
+    width: 175px;
+    font-size: 1rem;
+    background-position: 145px 5px;
+  }
+  .shopMain > h1 {
+    line-height: 1.5;
+    font-size: 1.8rem;
+  }
 }
