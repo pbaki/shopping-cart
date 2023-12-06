@@ -28,10 +28,9 @@ export default function ShoppingCart({
 function CartWithItems({ products, updatedData }) {
   const [cartProducts, setCartProducts] = useState(products);
 
-  const totalPrice = cartProducts.reduce(
-    (total, product) => total + product.price * product.quantity,
-    0
-  );
+  const totalPrice = cartProducts
+    .reduce((total, product) => total + product.price * product.quantity, 0)
+    .toFixed(2);
 
   function increaseProductCount(id) {
     const updatedCartProducts = cartProducts.map((item) => {
