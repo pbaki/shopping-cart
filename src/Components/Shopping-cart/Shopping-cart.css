@@ -200,6 +200,9 @@
   .cartProduct {
     width: 500px;
   }
+  .productImg {
+    min-width: 100px;
+  }
 }
 
 @media (max-width: 750px) {
@@ -225,7 +228,8 @@
   }
   .productImg {
     padding: 0px 10px;
-    width: 80px;
+    min-width: 0px;
+    max-width: 70px;
   }
   .removeFromCart {
     margin: 8px 5px;
@@ -254,14 +258,14 @@
   }
   .cartProduct {
     width: 200px;
-    gap: 3px;
+    gap: 0px;
   }
   .productName {
     font-size: 0.7rem;
   }
 
   .productImg {
-    width: 60px;
+    max-width: 40px;
   }
   .removeFromCart {
     margin: 4px 1px;

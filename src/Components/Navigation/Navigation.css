@@ -87,9 +87,6 @@
 }
 
 @media (max-width: 380px) {
-  .navContainer {
-    padding: 10px 20px;
-  }
   .navItems {
     gap: 8px;
     font-size: 1rem;
