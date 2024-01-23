@@ -14,10 +14,16 @@ Github Pages: [Link](https://pbaki.github.io/shopping-cart/)
 
 ```bash
 git clone git@github.com:pbaki/shopping-cart.git
+```
 
+```bash
 cd shopping-cart
+```
 
+```bash
 npm install
+```
 
+```bash
 npm run dev
 ```
